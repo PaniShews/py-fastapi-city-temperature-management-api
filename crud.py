@@ -1,8 +1,10 @@
+from datetime import datetime
 from typing import Optional
 
 from sqlalchemy.orm import Session
 
-import models, schemas
+import models
+import schemas
 
 
 def get_city(db: Session, city_id: int) -> Optional[models.City]:
@@ -51,7 +53,7 @@ def delete_city(db: Session, city_id: int) -> bool:
 
 
 def create_temperature_record(
-    db: Session, city_id: int, temperature: float, date_time
+    db: Session, city_id: int, temperature: float, date_time: datetime
 ) -> models.Temperature:
     db_temperature = models.Temperature(
         city_id=city_id, temperature=temperature, date_time=date_time

@@ -1,15 +1,12 @@
 from datetime import datetime
 from typing import Optional
 
-from pydantic import Field, BaseModel, ConfigDict
+from pydantic import BaseModel, ConfigDict, Field
 
 
 class CityBase(BaseModel):
-    name: str = Field(..., description="City name")
-    additional_info: Optional[str] = Field(
-        None,
-        description="Additional info"
-    )
+    name: str = Field(..., min_length=1, max_length=100)
+    additional_info: Optional[str] = None
 
 
 class CityCreate(CityBase):
@@ -17,14 +14,11 @@ class CityCreate(CityBase):
 
 
 class CityUpdate(BaseModel):
-    name: Optional[str] = Field(
-        default=None, min_length=1,
-        max_length=100
-    )
+    name: Optional[str] = Field(default=None, min_length=1, max_length=100)
     additional_info: Optional[str] = None
 
 
-class CityResponse(BaseModel):
+class CityResponse(CityBase):
     model_config = ConfigDict(from_attributes=True)
 
     id: int
